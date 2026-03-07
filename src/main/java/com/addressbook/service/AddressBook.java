@@ -1,86 +1,56 @@
 package com.addressbook.service;
 
-import com.addressbook.model.Person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
+
+import com.addressbook.model.Person;
 
 public class AddressBook {
 
 	// List to store contacts
-	// List to store contacts
 	List<Person> contactList = new ArrayList<>();
 
-	// Method to add contact
+	// Add contact
 	public void addContact(Person person) {
 		contactList.add(person);
 		System.out.println("Contact Added Successfully");
 	}
 
-	// Method to edit contact using first name
-	public void editContact(String name) {
+	// Edit contact using Stream API
+	public void editContact(String name, String address, String city, String state) {
 
-		Scanner scanner = new Scanner(System.in);
+		Optional<Person> person = contactList.stream().filter(p -> p.getFirstName().equalsIgnoreCase(name)).findFirst();
 
-		// Find person using Stream API
-		Optional<Person> personOptional = contactList.stream()
-				.filter(person -> person.getFirstName().equalsIgnoreCase(name)).findFirst();
+		if (person.isPresent()) {
 
-		if (personOptional.isPresent()) {
-
-			Person person = personOptional.get();
-
-			System.out.print("Enter new Address: ");
-			person.setAddress(scanner.nextLine());
-
-			System.out.print("Enter new City: ");
-			person.setCity(scanner.nextLine());
-
-			System.out.print("Enter new State: ");
-			person.setState(scanner.nextLine());
-
-			System.out.print("Enter new Zip: ");
-			person.setZip(scanner.nextLine());
-
-			System.out.print("Enter new Phone Number: ");
-			person.setPhoneNumber(scanner.nextLine());
-
-			System.out.print("Enter new Email: ");
-			person.setEmail(scanner.nextLine());
+			person.get().setAddress(address);
+			person.get().setCity(city);
+			person.get().setState(state);
 
 			System.out.println("Contact Updated Successfully");
-
 		} else {
 			System.out.println("Contact not found");
 		}
 	}
 
-	// UC:4- Method to delete contact using name
+	// Delete contact using Stream API
 	public void deleteContact(String name) {
 
-		// Find person using Stream API
-		Optional<Person> personOptional = contactList.stream()
-				.filter(person -> person.getFirstName().equalsIgnoreCase(name)).findFirst();
+		boolean removed = contactList.removeIf(p -> p.getFirstName().equalsIgnoreCase(name));
 
-		if (personOptional.isPresent()) {
-
-			contactList.remove(personOptional.get());
+		if (removed)
 			System.out.println("Contact Deleted Successfully");
-
-		} else {
-
+		else
 			System.out.println("Contact not found");
-		}
 	}
 
-	// Display contacts
+	// Display contacts using Stream API
 	public void displayContacts() {
 
-		if (contactList.isEmpty()) {
+		if (contactList.isEmpty())
 			System.out.println("No contacts available");
-		} else {
-			contactList.forEach(System.out::println);
-		}
+		else
+			contactList.stream().forEach(System.out::println);
 	}
 }
