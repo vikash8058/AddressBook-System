@@ -2,13 +2,15 @@ package com.addressbook.service;
 
 import com.addressbook.model.Person;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class AddressBook {
 
 	// List to store contacts
-	ArrayList<Person> contactList = new ArrayList<>();
+	// List to store contacts
+	List<Person> contactList = new ArrayList<>();
 
 	// Method to add contact
 	public void addContact(Person person) {
@@ -53,23 +55,32 @@ public class AddressBook {
 			System.out.println("Contact not found");
 		}
 	}
-	
-	//UC:4- Method to delete contact using name
+
+	// UC:4- Method to delete contact using name
 	public void deleteContact(String name) {
 
-	    // Find person using Stream API
-	    Optional<Person> personOptional = contactList.stream()
-	            .filter(person -> person.getFirstName().equalsIgnoreCase(name))
-	            .findFirst();
+		// Find person using Stream API
+		Optional<Person> personOptional = contactList.stream()
+				.filter(person -> person.getFirstName().equalsIgnoreCase(name)).findFirst();
 
-	    if (personOptional.isPresent()) {
+		if (personOptional.isPresent()) {
 
-	        contactList.remove(personOptional.get());
-	        System.out.println("Contact Deleted Successfully");
+			contactList.remove(personOptional.get());
+			System.out.println("Contact Deleted Successfully");
 
-	    } else {
+		} else {
 
-	        System.out.println("Contact not found");
-	    }
+			System.out.println("Contact not found");
+		}
+	}
+
+	// Display contacts
+	public void displayContacts() {
+
+		if (contactList.isEmpty()) {
+			System.out.println("No contacts available");
+		} else {
+			contactList.forEach(System.out::println);
+		}
 	}
 }

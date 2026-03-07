@@ -15,51 +15,63 @@ public class AddressBookMainApplication {
 
 		SpringApplication.run(AddressBookMainApplication.class, args);
 
-		System.out.println("Welcome to Address Book Program");
-
 		Scanner scanner = new Scanner(System.in);
-
 		AddressBook addressBook = new AddressBook();
 
-		System.out.print("Enter First Name: ");
-		String firstName = scanner.nextLine();
+		int choice;
 
-		System.out.print("Enter Last Name: ");
-		String lastName = scanner.nextLine();
+		do {
 
-		System.out.print("Enter Address: ");
-		String address = scanner.nextLine();
+			System.out.println("\n---- Address Book Menu ----");
+			System.out.println("1. Add Contact");
+			System.out.println("2. Display Contacts");
+			System.out.println("3. Exit");
 
-		System.out.print("Enter City: ");
-		String city = scanner.nextLine();
+			System.out.print("Enter choice: ");
+			choice = scanner.nextInt();
+			scanner.nextLine();
 
-		System.out.print("Enter State: ");
-		String state = scanner.nextLine();
+			switch (choice) {
 
-		System.out.print("Enter Zip: ");
-		String zip = scanner.nextLine();
+			case 1 -> {
 
-		System.out.print("Enter Phone Number: ");
-		String phone = scanner.nextLine();
+				// Take contact details
+				System.out.print("Enter First Name: ");
+				String firstName = scanner.nextLine();
 
-		System.out.print("Enter Email: ");
-		String email = scanner.nextLine();
+				System.out.print("Enter Last Name: ");
+				String lastName = scanner.nextLine();
 
-		Person person = new Person(firstName, lastName, address, city, state, zip, phone, email);
+				System.out.print("Enter Address: ");
+				String address = scanner.nextLine();
 
-		addressBook.addContact(person);
+				System.out.print("Enter City: ");
+				String city = scanner.nextLine();
 
-		// UC3: Edit contact
-		System.out.print("Enter name to edit contact: ");
-		String name = scanner.nextLine();
+				System.out.print("Enter State: ");
+				String state = scanner.nextLine();
 
-		addressBook.editContact(name);
+				System.out.print("Enter Zip: ");
+				String zip = scanner.nextLine();
 
-		// UC4: Delete Contact
-		System.out.print("Enter name to delete contact: ");
-		String deleteName = scanner.nextLine();
+				System.out.print("Enter Phone Number: ");
+				String phone = scanner.nextLine();
 
-		addressBook.deleteContact(deleteName);
+				System.out.print("Enter Email: ");
+				String email = scanner.nextLine();
+
+				Person person = new Person(firstName, lastName, address, city, state, zip, phone, email);
+
+				addressBook.addContact(person);
+			}
+			case 2 -> addressBook.displayContacts();
+
+			case 3 -> System.out.println("Exiting Address Book");
+
+			default -> System.out.println("Invalid choice");
+			}
+
+		} while (choice != 3);
 
 		scanner.close();
 	}
