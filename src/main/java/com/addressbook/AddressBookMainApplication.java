@@ -55,6 +55,12 @@ public class AddressBookMainApplication {
 
 		addressBook.editContact(name);
 
+		// UC4: Delete Contact
+		System.out.print("Enter name to delete contact: ");
+		String deleteName = scanner.nextLine();
+
+		addressBook.deleteContact(deleteName);
+
 		scanner.close();
 	}
 }
