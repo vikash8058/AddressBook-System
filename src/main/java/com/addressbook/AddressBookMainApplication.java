@@ -12,12 +12,14 @@ import com.addressbook.service.AddressBook;
 public class AddressBookMainApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(AddressBookMainApplication.class, args);
+
 		System.out.println("Welcome to Address Book Program");
 
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Welcome to Address Book Program");
+		AddressBook addressBook = new AddressBook();
 
 		System.out.print("Enter First Name: ");
 		String firstName = scanner.nextLine();
@@ -45,10 +47,14 @@ public class AddressBookMainApplication {
 
 		Person person = new Person(firstName, lastName, address, city, state, zip, phone, email);
 
-		AddressBook addressBook = new AddressBook();
-
 		addressBook.addContact(person);
 
-	}
+		// UC3: Edit contact
+		System.out.print("Enter name to edit contact: ");
+		String name = scanner.nextLine();
 
+		addressBook.editContact(name);
+
+		scanner.close();
+	}
 }
