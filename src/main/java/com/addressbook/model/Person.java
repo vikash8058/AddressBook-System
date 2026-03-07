@@ -27,4 +27,9 @@ public class Person {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return firstName + " " + lastName + " " + address + " " + city + " " + state;
+	}
+
 }
