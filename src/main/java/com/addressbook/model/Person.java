@@ -88,4 +88,24 @@ public class Person {
 	public String toString() {
 		return firstName + " " + lastName + " " + address + " " + city + " " + state;
 	}
+
+	// UC7: override Equals and Hashcode method
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj)
+			return true;
+
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+
+		Person person = (Person) obj;
+
+		return firstName.equalsIgnoreCase(person.firstName) && lastName.equalsIgnoreCase(person.lastName);
+	}
+
+	@Override
+	public int hashCode() {
+		return (firstName + lastName).toLowerCase().hashCode();
+	}
 }
