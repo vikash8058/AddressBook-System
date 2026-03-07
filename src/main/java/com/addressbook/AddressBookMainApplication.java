@@ -13,7 +13,6 @@ public class AddressBookMainApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AddressBookMainApplication.class, args);
-		System.out.println("Welcome to Address Book Program");
 
 		Scanner scanner = new Scanner(System.in);
 
@@ -43,6 +42,7 @@ public class AddressBookMainApplication {
 		System.out.print("Enter Email: ");
 		String email = scanner.nextLine();
 
+		// UC:2
 		Person person = new Person(firstName, lastName, address, city, state, zip, phone, email);
 
 		AddressBook addressBook = new AddressBook();
