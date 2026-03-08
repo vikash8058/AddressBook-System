@@ -2,6 +2,7 @@ package com.addressbook.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.addressbook.model.Person;
 import com.addressbook.service.AddressBook;
 
-@RestController
+@RestController	
 @RequestMapping("/contacts")
 public class AddressBookController {
 
@@ -66,5 +67,20 @@ public class AddressBookController {
         }
 
         return "Contact not found";
+    }
+    
+ // Delete contact
+    @DeleteMapping("/{name}")
+    public String deleteContact(@PathVariable String name) {
+
+        List<Person> contacts = addressBook.getContacts();
+
+        boolean removed = contacts.removeIf(
+                person -> person.getFirstName().equalsIgnoreCase(name));
+
+        if (removed)
+            return "Contact deleted successfully";
+        else
+            return "Contact not found";
     }
 }
