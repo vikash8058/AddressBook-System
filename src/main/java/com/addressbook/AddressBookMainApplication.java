@@ -55,7 +55,8 @@ public class AddressBookMainApplication {
 			System.out.println("21. Add Contact to Database");
 			System.out.println("22. View Contacts from Database");
 			System.out.println("23. Update Contact in Database");
-			System.out.println("24. Exit");
+			System.out.println("24. Delete Contact from Database");
+			System.out.println("25. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -346,12 +347,20 @@ public class AddressBookMainApplication {
 			    addressBook.updateContactInDatabase(name, city, phone);
 			}
 			
-			case 24 -> System.out.println("Exiting Program");
+			case 24 -> {
+
+			    System.out.print("Enter First Name to delete: ");
+			    String name = scanner.nextLine();
+
+			    addressBook.deleteContactFromDatabase(name);
+			}
+			
+			case 25 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 24);
+		} while (choice != 25);
 
 		scanner.close();
 	}

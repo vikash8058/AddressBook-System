@@ -279,4 +279,27 @@ public class AddressBook {
 	        e.printStackTrace();
 	    }
 	}
+	
+	//UC 20
+	// Delete contact from database
+	public void deleteContactFromDatabase(String firstName) {
+
+	    String sql = "DELETE FROM person_contact WHERE first_name=?";
+
+	    try (Connection connection = DatabaseConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, firstName);
+
+	        int rows = statement.executeUpdate();
+
+	        if (rows > 0)
+	            System.out.println("Contact deleted successfully");
+	        else
+	            System.out.println("Contact not found");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }
