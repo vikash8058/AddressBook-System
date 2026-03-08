@@ -37,7 +37,9 @@ public class AddressBookMainApplication {
 			System.out.println("6. Search Person by City or State");
 			System.out.println("7. View Persons by City");
 			System.out.println("8. View Persons by State");
-			System.out.println("9. Exit");
+			System.out.println("9. Count Contacts by City");
+			System.out.println("10. Count Contacts by State");
+			System.out.println("11. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -186,12 +188,32 @@ public class AddressBookMainApplication {
 				});
 			}
 
-			case 9 -> System.out.println("Exiting Program");
+			case 9 -> {
+
+				// Count persons by city
+				Map<String, Long> cityCount = addressBookMap.values().stream()
+						.flatMap(book -> book.getContacts().stream())
+						.collect(Collectors.groupingBy(Person::getCity, Collectors.counting()));
+
+				cityCount.forEach((city, count) -> System.out.println(city + " : " + count));
+			}
+
+			case 10 -> {
+
+				// Count persons by state
+				Map<String, Long> stateCount = addressBookMap.values().stream()
+						.flatMap(book -> book.getContacts().stream())
+						.collect(Collectors.groupingBy(Person::getState, Collectors.counting()));
+
+				stateCount.forEach((state, count) -> System.out.println(state + " : " + count));
+			}
+			
+			case 11 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 9);
+		} while (choice != 11);
 
 		scanner.close();
 	}
