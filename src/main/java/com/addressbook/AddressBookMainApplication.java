@@ -1,5 +1,6 @@
 package com.addressbook;
 
+import java.sql.Connection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.addressbook.database.DatabaseConnection;
 import com.addressbook.model.Person;
 import com.addressbook.service.AddressBook;
 
@@ -24,7 +26,7 @@ public class AddressBookMainApplication {
 
 		// Map to store multiple address books
 		Map<String, AddressBook> addressBookMap = new HashMap<>();
-
+		Connection connection = DatabaseConnection.getConnection();
 		int choice;
 
 		do {
