@@ -254,4 +254,29 @@ public class AddressBook {
 	        e.printStackTrace();
 	    }
 	}
+	
+	// UC 19
+	// Update contact in database
+	public void updateContactInDatabase(String firstName, String newCity, String newPhone) {
+
+	    String sql = "UPDATE person_contact SET city=?, phone=? WHERE first_name=?";
+
+	    try (Connection connection = DatabaseConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, newCity);
+	        statement.setString(2, newPhone);
+	        statement.setString(3, firstName);
+
+	        int rows = statement.executeUpdate();
+
+	        if (rows > 0)
+	            System.out.println("Contact updated successfully");
+	        else
+	            System.out.println("Contact not found");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

@@ -54,7 +54,8 @@ public class AddressBookMainApplication {
 			System.out.println("19. Write Contacts to JSON");
 			System.out.println("21. Add Contact to Database");
 			System.out.println("22. View Contacts from Database");
-			System.out.println("23. Exit");
+			System.out.println("23. Update Contact in Database");
+			System.out.println("24. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -331,12 +332,26 @@ public class AddressBookMainApplication {
 			    addressBook.getContactsFromDatabase();
 			}
 			
-			case 23 -> System.out.println("Exiting Program");
+			case 23 -> {
+
+			    System.out.print("Enter First Name to update: ");
+			    String name = scanner.nextLine();
+
+			    System.out.print("Enter new City: ");
+			    String city = scanner.nextLine();
+
+			    System.out.print("Enter new Phone: ");
+			    String phone = scanner.nextLine();
+
+			    addressBook.updateContactInDatabase(name, city, phone);
+			}
+			
+			case 24 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 23);
+		} while (choice != 24);
 
 		scanner.close();
 	}
