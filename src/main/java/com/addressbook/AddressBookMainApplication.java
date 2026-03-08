@@ -1,5 +1,6 @@
 package com.addressbook;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,8 @@ public class AddressBookMainApplication {
 			System.out.println("8. View Persons by State");
 			System.out.println("9. Count Contacts by City");
 			System.out.println("10. Count Contacts by State");
-			System.out.println("11. Exit");
+			System.out.println("11. Sort Contacts by Name");
+			System.out.println("12. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -207,13 +209,22 @@ public class AddressBookMainApplication {
 
 				stateCount.forEach((state, count) -> System.out.println(state + " : " + count));
 			}
+
+			case 11 -> {
+
+				// Sort contacts by name
+				addressBookMap.values().stream()
+						.flatMap(book -> book.getContacts().stream())
+						.sorted(Comparator.comparing(Person::getFirstName))
+						.forEach(System.out::println);
+			}
 			
-			case 11 -> System.out.println("Exiting Program");
+			case 12 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 11);
+		} while (choice != 12);
 
 		scanner.close();
 	}
