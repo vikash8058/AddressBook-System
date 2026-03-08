@@ -64,4 +64,10 @@ public class AddressBook {
 		else
 			contactList.stream().forEach(System.out::println);
 	}
+
+	
+	// Return all contacts - UC8
+	public List<Person> getContacts() {
+		return contactList;
+	}
 }

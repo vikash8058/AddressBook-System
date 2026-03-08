@@ -32,7 +32,8 @@ public class AddressBookMainApplication {
 			System.out.println("3. Edit Contact");
 			System.out.println("4. Delete Contact");
 			System.out.println("5. Display Contacts");
-			System.out.println("6. Exit");
+			System.out.println("6. Search Person by City or State");
+			System.out.println("7. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -145,12 +146,24 @@ public class AddressBookMainApplication {
 					book.displayContacts();
 			}
 
-			case 6 -> System.out.println("Exiting Program");
+			case 6 -> {
+
+				// Search by city or state
+				System.out.print("Enter City or State: ");
+				String searchValue = scanner.nextLine();
+
+				addressBookMap.values().stream().flatMap(book -> book.getContacts().stream())
+						.filter(person -> person.getCity().equalsIgnoreCase(searchValue)
+								|| person.getState().equalsIgnoreCase(searchValue))
+						.forEach(System.out::println);
+			}
+			
+			case 7 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 6);
+		} while (choice != 7);
 
 		scanner.close();
 	}
