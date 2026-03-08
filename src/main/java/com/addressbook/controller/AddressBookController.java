@@ -2,24 +2,18 @@ package com.addressbook.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.addressbook.model.Person;
 import com.addressbook.service.AddressBook;
 
-@RestController	
+@RestController
 @RequestMapping("/contacts")
 public class AddressBookController {
 
     private AddressBook addressBook = new AddressBook();
-
+    
     // Constructor
     public AddressBookController() {
 
@@ -34,23 +28,24 @@ public class AddressBookController {
 
     // Get all contacts
     @GetMapping
-    public List<Person> getContacts() {
+    public ResponseEntity<List<Person>> getContacts() {
 
-        return addressBook.getContacts();
+        return ResponseEntity.ok(addressBook.getContacts());
     }
-    
+
     // Add new contact
     @PostMapping
-    public String addContact(@RequestBody Person person) {
+    public ResponseEntity<String> addContact(@RequestBody Person person) {
 
         addressBook.addContact(person);
 
-        return "Contact added successfully";
+        return ResponseEntity.status(201).body("Contact added successfully");
     }
-    
- // Update contact
+
+    // Update contact
     @PutMapping("/{name}")
-    public String updateContact(@PathVariable String name, @RequestBody Person updatedPerson) {
+    public ResponseEntity<String> updateContact(@PathVariable String name,
+                                                @RequestBody Person updatedPerson) {
 
         List<Person> contacts = addressBook.getContacts();
 
@@ -62,25 +57,26 @@ public class AddressBookController {
                 person.setCity(updatedPerson.getCity());
                 person.setState(updatedPerson.getState());
 
-                return "Contact updated successfully";
+                return ResponseEntity.ok("Contact updated successfully");
             }
         }
 
-        return "Contact not found";
+        return ResponseEntity.status(404).body("Contact not found");
     }
-    
- // Delete contact
+
+    // Delete contact
     @DeleteMapping("/{name}")
-    public String deleteContact(@PathVariable String name) {
+    public ResponseEntity<String> deleteContact(@PathVariable String name) {
 
-        List<Person> contacts = addressBook.getContacts();
-
-        boolean removed = contacts.removeIf(
-                person -> person.getFirstName().equalsIgnoreCase(name));
+        boolean removed = addressBook.getContacts().removeIf(
+                p -> p.getFirstName().equalsIgnoreCase(name));
 
         if (removed)
-            return "Contact deleted successfully";
+            return ResponseEntity.ok("Contact deleted successfully");
         else
-            return "Contact not found";
+            return ResponseEntity.status(404).body("Contact not found");
     }
 }
+
+
+
