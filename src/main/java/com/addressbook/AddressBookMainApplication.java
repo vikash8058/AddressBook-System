@@ -46,7 +46,9 @@ public class AddressBookMainApplication {
 			System.out.println("14. Sort Contacts by Zip");
 			System.out.println("15. Write Contacts to File");
 			System.out.println("16. Read Contacts from File");
-			System.out.println("17. Exit");
+			System.out.println("17. Write Contacts to CSV");
+			System.out.println("18. Read Contacts from CSV");
+			System.out.println("19. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -263,12 +265,23 @@ public class AddressBookMainApplication {
 			            book.readContactsFromFile());
 			}
 			
-			case 17 -> System.out.println("Exiting Program");
+			case 17 -> {
+
+			    addressBookMap.values().forEach(book ->
+			            book.writeContactsToCSV());
+			}
+
+			case 18 -> {
+
+			    addressBookMap.values().forEach(book ->
+			            book.readContactsFromCSV());
+			}
+			case 19 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 17);
+		} while (choice != 19);
 
 		scanner.close();
 	}

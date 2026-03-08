@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.addressbook.model.Person;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 public class AddressBook {
 
@@ -108,6 +110,52 @@ public class AddressBook {
 	        }
 
 	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	//UC-14
+	// Write contacts to CSV file
+	public void writeContactsToCSV() {
+
+	    try (CSVWriter writer = new CSVWriter(new FileWriter("addressbook.csv"))) {
+
+	        for (Person person : contactList) {
+
+	            String[] data = {
+	                    person.getFirstName(),
+	                    person.getLastName(),
+	                    person.getAddress(),
+	                    person.getCity(),
+	                    person.getState(),
+	                    person.getZip(),
+	                    person.getPhoneNumber(),
+	                    person.getEmail()
+	            };
+
+	            writer.writeNext(data);
+	        }
+
+	        System.out.println("Contacts written to CSV file");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// Read contacts from CSV file
+	public void readContactsFromCSV() {
+
+	    try (CSVReader reader = new CSVReader(new FileReader("addressbook.csv"))) {
+
+	        String[] line;
+
+	        while ((line = reader.readNext()) != null) {
+
+	            System.out.println(String.join(" | ", line));
+	        }
+
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	}
