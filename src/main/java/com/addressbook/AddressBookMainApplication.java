@@ -41,7 +41,10 @@ public class AddressBookMainApplication {
 			System.out.println("9. Count Contacts by City");
 			System.out.println("10. Count Contacts by State");
 			System.out.println("11. Sort Contacts by Name");
-			System.out.println("12. Exit");
+			System.out.println("12. Sort Contacts by City");
+			System.out.println("13. Sort Contacts by State");
+			System.out.println("14. Sort Contacts by Zip");
+			System.out.println("15. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -219,12 +222,39 @@ public class AddressBookMainApplication {
 						.forEach(System.out::println);
 			}
 			
-			case 12 -> System.out.println("Exiting Program");
+			case 12 -> {
+
+			    // Sort contacts by city
+			    addressBookMap.values().stream()
+			            .flatMap(book -> book.getContacts().stream())
+			            .sorted(Comparator.comparing(Person::getCity))
+			            .forEach(System.out::println);
+			}
+			
+			case 13 -> {
+
+			    // Sort contacts by state
+			    addressBookMap.values().stream()
+			            .flatMap(book -> book.getContacts().stream())
+			            .sorted(Comparator.comparing(Person::getState))
+			            .forEach(System.out::println);
+			}
+			
+			case 14 -> {
+
+			    // Sort contacts by zip
+			    addressBookMap.values().stream()
+			            .flatMap(book -> book.getContacts().stream())
+			            .sorted(Comparator.comparing(Person::getZip))
+			            .forEach(System.out::println);
+			}
+			
+			case 15 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 12);
+		} while (choice != 15);
 
 		scanner.close();
 	}
