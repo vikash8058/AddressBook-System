@@ -50,7 +50,7 @@ public class AddressBookMainApplication {
 			System.out.println("18. Read Contacts from CSV");
 			System.out.println("19. Write Contacts to JSON");
 			System.out.println("20. Read Contacts from JSON");
-			System.out.println("19. Exit");
+			System.out.println("21. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
