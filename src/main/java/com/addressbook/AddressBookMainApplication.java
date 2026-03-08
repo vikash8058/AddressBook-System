@@ -1,8 +1,10 @@
 package com.addressbook;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,7 +35,9 @@ public class AddressBookMainApplication {
 			System.out.println("4. Delete Contact");
 			System.out.println("5. Display Contacts");
 			System.out.println("6. Search Person by City or State");
-			System.out.println("7. Exit");
+			System.out.println("7. View Persons by City");
+			System.out.println("8. View Persons by State");
+			System.out.println("9. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -157,13 +161,37 @@ public class AddressBookMainApplication {
 								|| person.getState().equalsIgnoreCase(searchValue))
 						.forEach(System.out::println);
 			}
-			
-			case 7 -> System.out.println("Exiting Program");
+
+			case 7 -> {
+
+				// Group persons by city
+				Map<String, List<Person>> cityMap = addressBookMap.values().stream()
+						.flatMap(book -> book.getContacts().stream()).collect(Collectors.groupingBy(Person::getCity));
+
+				cityMap.forEach((city, persons) -> {
+					System.out.println("\nCity: " + city);
+					persons.forEach(System.out::println);
+				});
+			}
+
+			case 8 -> {
+
+				// Group persons by state
+				Map<String, List<Person>> stateMap = addressBookMap.values().stream()
+						.flatMap(book -> book.getContacts().stream()).collect(Collectors.groupingBy(Person::getState));
+
+				stateMap.forEach((state, persons) -> {
+					System.out.println("\nState: " + state);
+					persons.forEach(System.out::println);
+				});
+			}
+
+			case 9 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 7);
+		} while (choice != 9);
 
 		scanner.close();
 	}
