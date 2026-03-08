@@ -61,6 +61,15 @@
 		    <artifactId>opencsv</artifactId>
 		    <version>5.7.1</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.apps</groupId>
+			<artifactId>QuantityMeasurementApp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

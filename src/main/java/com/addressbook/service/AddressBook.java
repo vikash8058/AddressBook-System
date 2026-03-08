@@ -1,6 +1,7 @@
 package com.addressbook.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.addressbook.model.Person;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -156,6 +159,42 @@ public class AddressBook {
 	        }
 
 	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	//UC 15
+	// Write contacts to JSON file
+	public void writeContactsToJSON() {
+
+	    ObjectMapper mapper = new ObjectMapper();
+
+	    try {
+
+	        mapper.writeValue(new File("addressbook.json"), contactList);
+
+	        System.out.println("Contacts written to JSON file");
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// Read contacts from JSON file
+	public void readContactsFromJSON() {
+
+	    ObjectMapper mapper = new ObjectMapper();
+
+	    try {
+
+	        List<Person> persons = mapper.readValue(
+	                new File("addressbook.json"),
+	                new TypeReference<List<Person>>() {}
+	        );
+
+	        persons.forEach(System.out::println);
+
+	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	}
