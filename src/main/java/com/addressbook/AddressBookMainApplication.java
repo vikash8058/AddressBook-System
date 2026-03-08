@@ -25,6 +25,7 @@ public class AddressBookMainApplication {
 		Scanner scanner = new Scanner(System.in);
 		
 		AddressBook addressBook=new AddressBook();
+		
 		// Map to store multiple address books
 		Map<String, AddressBook> addressBookMap = new HashMap<>();
 		Connection connection = DatabaseConnection.getConnection();
@@ -56,7 +57,8 @@ public class AddressBookMainApplication {
 			System.out.println("22. View Contacts from Database");
 			System.out.println("23. Update Contact in Database");
 			System.out.println("24. Delete Contact from Database");
-			System.out.println("25. Exit");
+			System.out.println("25. Get Contact List");
+			System.out.println("26. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -355,12 +357,19 @@ public class AddressBookMainApplication {
 			    addressBook.deleteContactFromDatabase(name);
 			}
 			
-			case 25 -> System.out.println("Exiting Program");
+			case 25 -> {
+
+			    addressBookMap.values().stream()
+			            .flatMap(book -> book.getContacts().stream())
+			            .forEach(System.out::println);
+			}
+			
+			case 26 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 25);
+		} while (choice != 26);
 
 		scanner.close();
 	}
