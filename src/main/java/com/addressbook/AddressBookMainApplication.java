@@ -23,7 +23,8 @@ public class AddressBookMainApplication {
 		SpringApplication.run(AddressBookMainApplication.class, args);
 
 		Scanner scanner = new Scanner(System.in);
-
+		
+		AddressBook addressBook=new AddressBook();
 		// Map to store multiple address books
 		Map<String, AddressBook> addressBookMap = new HashMap<>();
 		Connection connection = DatabaseConnection.getConnection();
@@ -51,8 +52,8 @@ public class AddressBookMainApplication {
 			System.out.println("17. Write Contacts to CSV");
 			System.out.println("18. Read Contacts from CSV");
 			System.out.println("19. Write Contacts to JSON");
-			System.out.println("20. Read Contacts from JSON");
-			System.out.println("21. Exit");
+			System.out.println("21. Add Contact to Database");
+			System.out.println("22. Exit");
 
 			System.out.print("Enter choice: ");
 			choice = scanner.nextInt();
@@ -293,12 +294,43 @@ public class AddressBookMainApplication {
 			            book.readContactsFromJSON());
 			}
 			
-			case 21 -> System.out.println("Exiting Program");
+			case 21 -> {
+
+			    System.out.print("Enter First Name: ");
+			    String firstName = scanner.nextLine();
+
+			    System.out.print("Enter Last Name: ");
+			    String lastName = scanner.nextLine();
+
+			    System.out.print("Enter Address: ");
+			    String address = scanner.nextLine();
+
+			    System.out.print("Enter City: ");
+			    String city = scanner.nextLine();
+
+			    System.out.print("Enter State: ");
+			    String state = scanner.nextLine();
+
+			    System.out.print("Enter Zip: ");
+			    String zip = scanner.nextLine();
+
+			    System.out.print("Enter Phone: ");
+			    String phone = scanner.nextLine();
+
+			    System.out.print("Enter Email: ");
+			    String email = scanner.nextLine();
+
+			    Person person = new Person(firstName,lastName,address,city,state,zip,phone,email);
+
+			    addressBook.addContactToDatabase(person);
+			}
+			
+			case 22 -> System.out.println("Exiting Program");
 
 			default -> System.out.println("Invalid Choice");
 			}
 
-		} while (choice != 21);
+		} while (choice != 22);
 
 		scanner.close();
 	}

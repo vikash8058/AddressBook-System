@@ -5,10 +5,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.addressbook.database.DatabaseConnection;
 import com.addressbook.model.Person;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -198,4 +201,32 @@ public class AddressBook {
 	        e.printStackTrace();
 	    }
 	}
+	
+	//UC 17
+	// Add contact to database
+	public void addContactToDatabase(Person person) {
+
+	    String sql = "INSERT INTO person_contact(first_name,last_name,address,city,state,zip,phone,email) VALUES (?,?,?,?,?,?,?,?)";
+
+	    try (Connection connection = DatabaseConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setString(1, person.getFirstName());
+	        statement.setString(2, person.getLastName());
+	        statement.setString(3, person.getAddress());
+	        statement.setString(4, person.getCity());
+	        statement.setString(5, person.getState());
+	        statement.setString(6, person.getZip());
+	        statement.setString(7, person.getPhoneNumber());
+	        statement.setString(8, person.getEmail());
+
+	        statement.executeUpdate();
+
+	        System.out.println("Contact added to database");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 }
