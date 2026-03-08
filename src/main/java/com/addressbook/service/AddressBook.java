@@ -1,5 +1,9 @@
 package com.addressbook.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,5 +73,42 @@ public class AddressBook {
 	// Return all contacts - UC8
 	public List<Person> getContacts() {
 		return contactList;
+	}
+	
+	//UC-13
+	// Write contacts to file
+	public void writeContactsToFile() {
+
+	    try (FileWriter writer = new FileWriter("addressbook.txt")) {
+
+	        contactList.forEach(person -> {
+	            try {
+	                writer.write(person.toString() + "\n");
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        });
+
+	        System.out.println("Contacts written to file");
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// Read contacts from file
+	public void readContactsFromFile() {
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader("addressbook.txt"))) {
+
+	        String line;
+
+	        while ((line = reader.readLine()) != null) {
+	            System.out.println(line);
+	        }
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 }
